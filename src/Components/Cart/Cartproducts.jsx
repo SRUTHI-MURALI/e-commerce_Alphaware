@@ -8,7 +8,7 @@ import {TbPlayerTrackNextFilled} from 'react-icons/tb'
 
 function Cartproducts() {
   const cartData = JSON.parse(localStorage.getItem('cartData')) || [];
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const navigate= useNavigate()
  

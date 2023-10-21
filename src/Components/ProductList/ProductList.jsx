@@ -13,7 +13,7 @@ import { TbPlayerTrackNextFilled } from "react-icons/tb";
 
 function ProductList() {
   const [data, setData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
 
   const navigate = useNavigate();
 
@@ -39,8 +39,14 @@ function ProductList() {
       existingCartData.push({ product });
 
       localStorage.setItem("cartData", JSON.stringify(existingCartData));
+
     } else {
-      toast.error("Product already exists in the cart");
+      const storedCount = localStorage.getItem(`product_${product._id}`);
+      const updatedCount = parseInt(storedCount, 10) + 1;
+      localStorage.setItem(`product_${product._id}`, updatedCount.toString());
+
+      
+      toast.success("Existing product count incremented in the cart");
     }
   };
 
