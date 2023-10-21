@@ -1,0 +1,7 @@
+.cart-button{
+    margin: 5px;
+    border-radius: 3rem;
+    width: 3rem;
+    background-color: rgb(232, 234, 240);
+    color: '#ffff' !important
+}
