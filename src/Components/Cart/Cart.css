@@ -1,7 +1,12 @@
 .cart-button{
     margin: 5px;
     border-radius: 3rem;
-    width: 3rem;
-    background-color: rgb(232, 234, 240);
-    color: '#ffff' !important
+    width: 4rem;
+    background-color: rgb(96, 168, 162);
+    border-style: none;
+}
+
+.remove-button{
+    background-color: rgb(101, 185, 178);
+    border-style: none;
 }

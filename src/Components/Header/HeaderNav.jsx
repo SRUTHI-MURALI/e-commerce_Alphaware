@@ -6,7 +6,9 @@ import Navbar from 'react-bootstrap/Navbar';
 
 import logo from "../../Assets/Images/logo.png"
 
+
 function HeaderNav() {
+ 
   return (
     <Navbar expand="lg" className="bg-body-tertiary" >
       <Container style={{backgroundColor:'rgb(146, 199, 195)'}} fluid>
@@ -25,8 +27,7 @@ function HeaderNav() {
             style={{ maxHeight: '100px' }}
             navbarScroll
           >
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/cart">Cart</Nav.Link>
+           
             
             
           </Nav>
