@@ -10,3 +10,26 @@
     background-color: rgb(101, 185, 178);
     border-style: none;
 }
+
+/* Pagination.css */
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: center;
+    margin: 20px 0;
+  }
+  
+  .pagination li {
+    margin: 0 5px;
+  }
+  
+  .pagination li.active {
+    font-weight: bold;
+  }
+  
+  .pagination li.disabled {
+    pointer-events: none;
+    color: #aaa;
+  }
+  

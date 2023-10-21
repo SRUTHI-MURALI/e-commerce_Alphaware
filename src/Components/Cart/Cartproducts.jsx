@@ -1,11 +1,14 @@
-import React, {  useState } from "react";
+import React, {  useMemo, useState } from "react";
 import { Button, Col, Container, Row, Table } from "react-bootstrap";
 import './Cart.css';
+import ReactPaginate from 'react-paginate';
 import { useNavigate } from "react-router-dom";
-
+import {FaBackward} from 'react-icons/fa'
+import {TbPlayerTrackNextFilled} from 'react-icons/tb'
 
 function Cartproducts() {
   const cartData = JSON.parse(localStorage.getItem('cartData')) || [];
+  const [currentPage, setCurrentPage] = useState(1);
 
   const navigate= useNavigate()
  
@@ -49,6 +52,21 @@ function Cartproducts() {
     navigate('/')
   }
 
+  let PageSize = 2;
+
+  const pageCount = Math.ceil(cartData.length / PageSize);
+
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = currentPage * PageSize;
+    const lastPageIndex = Math.min(firstPageIndex + PageSize, cartData.length);
+    return cartData.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, cartData]);
+
+  const handlePageClick = (data) => {
+    setCurrentPage(data.selected);
+  };
+
+
   return (
     <Container>
       <Row>
@@ -66,32 +84,47 @@ function Cartproducts() {
           <th>Product Image</th>
           <th>Product Name</th>
           <th>Total Amount</th>
+          <th>Quantity </th>
           <th>Actions </th>
         </tr>
       </thead>
       <tbody  className="text-center">
-      {cartData.map((item, index) => (
+      {currentTableData.map((item, index) => (
         <>
         <tr key={item?.product?._id} >
           <td>{index+1} </td>
-          <td><img src={item?.product?.imageUrl} style={{ height: '16rem' }} /></td>
+          <td><img src={item?.product?.imageUrl} style={{ height: '8rem' }} /></td>
           <td>{item?.product?.name}
                 <br/>
                 ₹ {item?.product?.price}
           </td>
          
           <td> ₹ {productCounts[item?.product?._id] * item?.product?.price}</td>
+          
           <td><Button className="cart-button  m-2" variant="danger" onClick={() => handleDecrement(item?.product?._id)}>-</Button>
               {productCounts[item?.product?._id]}
               <Button className="cart-button m-2" variant="success"  onClick={() => handleIncrement(item?.product?._id)}>+</Button>
-              <br/>
-              <Button className="m-5 remove-button" variant="danger"  onClick={()=>handleRemove(item?.product?._id)}>  Remove</Button>
+              
+              
           </td>
+          <td><Button className="m-2 remove-button" variant="danger"  onClick={()=>handleRemove(item?.product?._id)}>  Remove</Button></td>
         </tr>
         </>
          ))}
       </tbody>
     </Table>
+    <ReactPaginate
+          previousLabel={<FaBackward/>}
+          nextLabel={<TbPlayerTrackNextFilled/>}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+        />
       </Row>
     </Container>
   );

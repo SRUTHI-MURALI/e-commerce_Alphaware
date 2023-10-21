@@ -5,10 +5,14 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 import logo from "../../Assets/Images/logo.png"
+import { useState } from 'react';
 
 
 function HeaderNav() {
- 
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  
+  
   return (
     <Navbar expand="lg" className="bg-body-tertiary" >
       <Container style={{backgroundColor:'rgb(146, 199, 195)'}} fluid>
@@ -37,8 +41,10 @@ function HeaderNav() {
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              value={searchQuery}
+              
             />
-            <Button variant="outline-success">Search</Button>
+            <Button variant="outline-success"  onClick={(e) => setSearchQuery(e.target.value)}>Search</Button>
           </Form>
         </Navbar.Collapse>
       </Container>
