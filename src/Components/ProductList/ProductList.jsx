@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Container, Row, Card, Button, Col } from "react-bootstrap";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,11 +11,19 @@ import ReactPaginate from "react-paginate";
 import { FaBackward } from "react-icons/fa";
 import { TbPlayerTrackNextFilled } from "react-icons/tb";
 
-function ProductList() {
+function ProductList({ searchData }) {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [searchedData, setSearchedData] = useState([]);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const filteredProducts = data.filter((product) =>
+      product.name.toLowerCase().includes(searchData.toLowerCase())
+    );
+    setSearchedData(filteredProducts);
+  }, [searchData, data]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,21 +39,19 @@ function ProductList() {
 
   const handleAddtoCart = (product) => {
     const existingCartData = JSON.parse(localStorage.getItem("cartData")) || [];
-    const productExistsInCart = existingCartData.some(
+    const productInCart = existingCartData.some(
       (item) => item.product._id === product._id
     );
-    if (!productExistsInCart) {
+    if (!productInCart) {
       toast.success("Product added to cart successfully");
       existingCartData.push({ product });
 
       localStorage.setItem("cartData", JSON.stringify(existingCartData));
-
     } else {
-      const storedCount = localStorage.getItem(`product_${product._id}`);
-      const updatedCount = parseInt(storedCount, 10) + 1;
+      const oldCount = localStorage.getItem(`product_${product._id}`);
+      const updatedCount = parseInt(oldCount, 10) + 1;
       localStorage.setItem(`product_${product._id}`, updatedCount.toString());
 
-      
       toast.success("Existing product count incremented in the cart");
     }
   };
@@ -55,14 +61,13 @@ function ProductList() {
   };
 
   let PageSize = 8;
-
-  const pageCount = Math.ceil(data.length / PageSize);
+  const pageCount = Math.ceil(searchedData.length / PageSize);
 
   const currentTableData = useMemo(() => {
-    const firstPageIndex = currentPage * PageSize;
-    const lastPageIndex = Math.min(firstPageIndex + PageSize, data.length);
-    return data.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, data]);
+    const firstPage = currentPage * PageSize;
+    const lastPage = Math.min(firstPage + PageSize, searchedData.length);
+    return searchedData.slice(firstPage, lastPage);
+  }, [currentPage, searchedData]);
 
   const handlePageClick = (data) => {
     setCurrentPage(data.selected);
@@ -113,15 +118,46 @@ function ProductList() {
               />
               <Card.Body>
                 <Card.Title>{product.name}</Card.Title>
-                <Card.Text>Price: {product.price}</Card.Text>
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    handleAddtoCart(product);
-                  }}
+                <Card.Text>
+                  <span style={{ fontWeight: "bold" }}>Price :</span>
+                  <del style={{ color: "red" }}> {product.price} </del>
+
+                  <span
+                    style={{
+                      color: "green",
+                      fontWeight: "bold",
+                      marginLeft: "1rem",
+                    }}
+                  >
+                    ₹ {product.discountAmount}
+                  </span>
+                </Card.Text>
+
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
                 >
-                  Add to Cart
-                </Button>
+                  <div>
+                    <Card.Text>
+                      Rating : {product.rating} stars &nbsp;&nbsp;
+                    </Card.Text>
+                  </div>
+                  <div>
+                    <Card.Text>Review : {product.reviewCount}</Card.Text>
+                  </div>
+                </div>
+                <div className="d-flex justify-content-center mt-2">
+                  {" "}
+                  {/* mt-auto to push to the bottom */}
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      handleAddtoCart(product);
+                    }}
+                    className="add-cart-button" // Add custom CSS class
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
               </Card.Body>
             </Card>
           ))}

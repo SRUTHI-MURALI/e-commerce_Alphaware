@@ -1,14 +1,14 @@
-import React from 'react'
-import Cartproducts from '../Components/Cart/Cartproducts'
-import HeaderNav from '../Components/Header/HeaderNav'
+import React from "react";
+import Cartproducts from "../Components/Cart/Cartproducts";
+import HeaderNav from "../Components/Header/HeaderNav";
 
 function Cart() {
   return (
     <div>
-      <HeaderNav/>
-      <Cartproducts/>
+      <HeaderNav data={"cart"} />
+      <Cartproducts />
     </div>
-  )
+  );
 }
 
-export default Cart
+export default Cart;

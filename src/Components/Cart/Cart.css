@@ -1,35 +1,33 @@
-.cart-button{
-    margin: 5px;
-    border-radius: 3rem;
-    width: 4rem;
-    background-color: rgb(96, 168, 162);
-    border-style: none;
+.cart-button {
+  margin: 5px;
+  border-radius: 3rem;
+  width: 4rem;
+  background-color: rgb(96, 168, 162);
+  border-style: none;
 }
 
-.remove-button{
-    background-color: rgb(101, 185, 178);
-    border-style: none;
+.remove-button {
+  background-color: rgb(101, 185, 178);
+  border-style: none;
 }
 
-/* Pagination.css */
 .pagination {
-    display: flex;
-    list-style: none;
-    padding: 0;
-    justify-content: center;
-    margin: 20px 0;
-  }
-  
-  .pagination li {
-    margin: 0 5px;
-  }
-  
-  .pagination li.active {
-    font-weight: bold;
-  }
-  
-  .pagination li.disabled {
-    pointer-events: none;
-    color: #aaa;
-  }
-  
+  display: flex;
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination li.active {
+  font-weight: bold;
+}
+
+.pagination li.disabled {
+  pointer-events: none;
+  color: #aaa;
+}

@@ -1,0 +1,7 @@
+.nav-heading {
+  text-decoration: solid;
+  color: rgb(18, 27, 90);
+  text-transform: capitalize;
+  height: 2rem;
+  font-weight: bolder;
+}
